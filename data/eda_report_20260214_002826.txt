@@ -1,0 +1,48 @@
+======================================================================
+B2B MARKETPLACE DATA - EDA SUMMARY REPORT
+======================================================================
+
+Generated: 2026-02-14 00:28:26
+Dataset: data/processed_20260213_113415.csv
+Total Records: 250
+
+DATASET OVERVIEW
+----------------------------------------------------------------------
+                               name                price  price_numeric            company               location          category rating                                                 url                  scraped_at  price_cleaned       location_cleaned    state    company_cleaned  price_category                          product_keywords  name_length has_price  category_code  quality_score
+count                           250                  250   1.980000e+02                250                    250               250    168                                                 250                         250   1.980000e+02                    250      250                250             250                                       250   250.000000       250     250.000000     250.000000
+unique                          192                  198            NaN                139                     20                 5     16                                                 250                         250            NaN                     20       12                139               3                                       192          NaN         2            NaN            NaN
+top     High Speed Georgette Fabric  Price not available            NaN  Supreme Suppliers  Kanpur, Uttar Pradesh  safety equipment  3.7 ★  https://www.indiamart.com/proddetail/99103271.html  2026-02-13T11:33:04.931553            NaN  Kanpur, Uttar Pradesh  Gujarat  Supreme Suppliers  Budget (< ₹1K)  ['high', 'speed', 'georgette', 'fabric']          NaN      True            NaN            NaN
+freq                              4                   52            NaN                  5                     19                59     16                                                   1                           1            NaN                     19       54                  5             164                                         4          NaN       198            NaN            NaN
+mean                            NaN                  NaN   4.903161e+05                NaN                    NaN               NaN    NaN                                                 NaN                         NaN   4.728408e+05                    NaN      NaN                NaN             NaN                                       NaN    24.796000       NaN       2.056000      94.800000
+std                             NaN                  NaN   1.199268e+06                NaN                    NaN               NaN    NaN                                                 NaN                         NaN   1.205891e+06                    NaN      NaN                NaN             NaN                                       NaN     5.767446       NaN       1.415939      10.167276
+min                             NaN                  NaN   1.200000e+02                NaN                    NaN               NaN    NaN                                                 NaN                         NaN   1.000000e+00                    NaN      NaN                NaN             NaN                                       NaN    11.000000       NaN       0.000000      75.000000
+25%                             NaN                  NaN   3.383000e+03                NaN                    NaN               NaN    NaN                                                 NaN                         NaN   5.000000e+00                    NaN      NaN                NaN             NaN                                       NaN    21.000000       NaN       1.000000     100.000000
+50%                             NaN                  NaN   1.287600e+04                NaN                    NaN               NaN    NaN                                                 NaN                         NaN   2.850000e+01                    NaN      NaN                NaN             NaN                                       NaN    25.000000       NaN       2.000000     100.000000
+75%                             NaN                  NaN   6.640250e+04                NaN                    NaN               NaN    NaN                                                 NaN                         NaN   1.575000e+02                    NaN      NaN                NaN             NaN                                       NaN    28.000000       NaN       3.000000     100.000000
+max                             NaN                  NaN   4.889304e+06                NaN                    NaN               NaN    NaN                                                 NaN                         NaN   4.889000e+06                    NaN      NaN                NaN             NaN                                       NaN    41.000000       NaN       4.000000     100.000000
+
+CATEGORY DISTRIBUTION
+----------------------------------------------------------------------
+category
+safety equipment         59
+electronic components    51
+plastic raw materials    50
+textile fabrics          49
+industrial machinery     41
+
+TOP 15 STATES
+----------------------------------------------------------------------
+state
+Gujarat           54
+Maharashtra       48
+Uttar Pradesh     32
+Tamil Nadu        29
+Telangana         15
+Rajasthan         13
+Karnataka         12
+Punjab            12
+West Bengal       11
+Andhra Pradesh    11
+Madhya Pradesh     7
+Delhi              6
+
