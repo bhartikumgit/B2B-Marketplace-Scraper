@@ -427,10 +427,10 @@ For educational and demonstration purposes only. Please respect website terms of
 
 ## 📧 Contact
 
-**Developer:** [Your Name]  
-**Email:** [Your Email]  
-**LinkedIn:** [Your LinkedIn]  
-**Portfolio:** [Your Portfolio]
+**Developer:** Bharti Kumari 
+**Email:** bhartikum08@gmail.com
+**LinkedIn:**  https://www.linkedin.com/in/bharti-kumari-771b46251/
+**Portfolio:** https://bhartis-portfolio.vercel.app/
 
 **For Slooze:** Submit via careers@slooze.xyz
 
