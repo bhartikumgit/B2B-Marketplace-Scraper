@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B2B Marketplace Scraper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .main-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .progress-status {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .datasets-list {
+            margin-top: 20px;
+        }
+
+        .dataset-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dataset-info {
+            flex: 1;
+        }
+
+        .dataset-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .dataset-meta {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .dataset-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 20px;
+            font-size: 0.9em;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-view {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-download {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .scraping-indicator {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🚀 B2B Marketplace Scraper</h1>
+            <p class="subtitle">Multi-source data collection platform for B2B marketplaces</p>
+        </header>
+
+        <!-- Stats Dashboard -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalProducts">0</div>
+                <div class="stat-label">Total Products</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalCategories">0</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalSources">0</div>
+                <div class="stat-label">Data Sources</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalDatasets">0</div>
+                <div class="stat-label">Datasets</div>
+            </div>
+        </div>
+
+        <!-- Main Control Panel -->
+        <div class="main-panel">
+            <div id="alertBox" class="alert"></div>
+
+            <h2 class="section-title">Select Categories to Scrape</h2>
+            <div class="checkbox-grid" id="categoriesGrid">
+                <!-- Categories will be loaded here -->
+            </div>
+
+            <h2 class="section-title">Select Data Sources</h2>
+            <div class="checkbox-grid" id="sourcesGrid">
+                <!-- Sources will be loaded here -->
+            </div>
+
+            <button class="btn btn-primary" id="startBtn" onclick="startScraping()">
+                Start Scraping
+            </button>
+
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
+                </div>
+                <div class="progress-status" id="progressStatus">Initializing...</div>
+            </div>
+        </div>
+
+        <!-- Datasets List -->
+        <div class="main-panel">
+            <h2 class="section-title">Available Datasets</h2>
+            <div class="datasets-list" id="datasetsList">
+                <p style="text-align: center; color: #666;">Loading datasets...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load initial data
+        loadCategories();
+        loadSources();
+        loadDatasets();
+        loadStats();
+
+        // Polling for status updates
+        let statusInterval = null;
+
+        async function loadCategories() {
+            try {
+                const response = await fetch('/api/categories');
+                const data = await response.json();
+                
+                const grid = document.getElementById('categoriesGrid');
+                grid.innerHTML = '';
+                
+                data.categories.forEach(cat => {
+                    grid.innerHTML += `
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="cat_${cat.id}" value="${cat.id}" checked>
+                            <label for="cat_${cat.id}">${cat.name}</label>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error loading categories:', error);
+            }
+        }
+
+        async function loadSources() {
+            try {
+                const response = await fetch('/api/sources');
+                const data = await response.json();
+                
+                const grid = document.getElementById('sourcesGrid');
+                grid.innerHTML = '';
+                
+                data.sources.forEach(source => {
+                    grid.innerHTML += `
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="src_${source.id}" value="${source.id}" checked>
+                            <label for="src_${source.id}">${source.name}</label>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error loading sources:', error);
+            }
+        }
+
+        async function loadDatasets() {
+            try {
+                const response = await fetch('/api/datasets');
+                const data = await response.json();
+                
+                const list = document.getElementById('datasetsList');
+                
+                if (data.datasets.length === 0) {
+                    list.innerHTML = '<p style="text-align: center; color: #666;">No datasets available yet. Start scraping to create one!</p>';
+                    return;
+                }
+                
+                list.innerHTML = '';
+                data.datasets.forEach(dataset => {
+                    const date = new Date(dataset.created).toLocaleString();
+                    const size = (dataset.size / 1024).toFixed(2);
+                    
+                    list.innerHTML += `
+                        <div class="dataset-item">
+                            <div class="dataset-info">
+                                <div class="dataset-name">${dataset.filename}</div>
+                                <div class="dataset-meta">
+                                    ${dataset.rows} products • ${dataset.categories} categories • ${size} KB • Created: ${date}
+                                </div>
+                            </div>
+                            <div class="dataset-actions">
+                                <button class="btn-small btn-view" onclick="viewDataset('${dataset.filename}')">View</button>
+                                <button class="btn-small btn-download" onclick="downloadDataset('${dataset.filename}')">Download</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error loading datasets:', error);
+            }
+        }
+
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                if (data.success && data.stats) {
+                    document.getElementById('totalProducts').textContent = data.stats.total_products || 0;
+                    document.getElementById('totalCategories').textContent = data.stats.categories || 0;
+                    document.getElementById('totalSources').textContent = data.stats.sources || 0;
+                    document.getElementById('totalDatasets').textContent = data.stats.total_datasets || 0;
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        async function startScraping() {
+            // Get selected categories
+            const categories = [];
+            document.querySelectorAll('#categoriesGrid input:checked').forEach(cb => {
+                categories.push(cb.value);
+            });
+
+            // Get selected sources
+            const sources = [];
+            document.querySelectorAll('#sourcesGrid input:checked').forEach(cb => {
+                sources.push(cb.value);
+            });
+
+            if (categories.length === 0) {
+                showAlert('Please select at least one category', 'error');
+                return;
+            }
+
+            if (sources.length === 0) {
+                showAlert('Please select at least one data source', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/scrape', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        categories: categories,
+                        sources: sources,
+                        products_per_category: 50
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showAlert('Scraping started! This may take a few minutes...', 'success');
+                    document.getElementById('progressContainer').style.display = 'block';
+                    document.getElementById('startBtn').disabled = true;
+                    
+                    // Start polling for status
+                    statusInterval = setInterval(checkStatus, 1000);
+                } else {
+                    showAlert(data.message, 'error');
+                }
+            } catch (error) {
+                showAlert('Error starting scraping: ' + error.message, 'error');
+            }
+        }
+
+        async function checkStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const status = data.status;
+                    
+                    // Update progress bar
+                    const progressFill = document.getElementById('progressFill');
+                    progressFill.style.width = status.progress + '%';
+                    progressFill.textContent = status.progress + '%';
+                    
+                    // Update status message
+                    document.getElementById('progressStatus').textContent = status.message;
+                    
+                    // If scraping is complete
+                    if (!status.is_scraping && status.progress === 100) {
+                        clearInterval(statusInterval);
+                        document.getElementById('startBtn').disabled = false;
+                        showAlert('Scraping completed successfully!', 'success');
+                        
+                        // Reload datasets and stats
+                        setTimeout(() => {
+                            loadDatasets();
+                            loadStats();
+                        }, 1000);
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking status:', error);
+            }
+        }
+
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.className = 'alert alert-' + type;
+            alertBox.textContent = message;
+            alertBox.style.display = 'block';
+            
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 5000);
+        }
+
+        function viewDataset(filename) {
+            window.open(`/api/data/${filename}`, '_blank');
+        }
+
+        function downloadDataset(filename) {
+            window.location.href = `/api/download/${filename}`;
+        }
+
+        // Refresh datasets every 10 seconds
+        setInterval(() => {
+            if (!statusInterval) {  // Only if not scraping
+                loadDatasets();
+                loadStats();
+            }
+        }, 10000);
+    </script>
+</body>
+</html>
